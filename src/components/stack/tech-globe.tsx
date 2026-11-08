@@ -140,7 +140,7 @@ export function TechGlobe({ items }: { items: GlobeItem[] }) {
   }, [items]);
 
   return (
-    <figure className="mx-auto w-full max-w-[24rem] select-none sm:max-w-[26rem]">
+    <figure className="mx-auto w-full max-w-[24rem] select-none sm:max-w-[32rem] lg:max-w-[38rem]">
       <div
         ref={stageRef}
         role="img"
@@ -166,11 +166,11 @@ export function TechGlobe({ items }: { items: GlobeItem[] }) {
               setSelected((current) => (current?.name === item.name ? null : item));
             }}
             className={cn(
-              "absolute top-1/2 left-1/2 inline-flex size-12 items-center justify-center rounded-2xl transition-[background-color,box-shadow] duration-200 will-change-transform",
+              "absolute top-1/2 left-1/2 inline-flex size-12 items-center justify-center rounded-2xl sm:size-14 lg:size-16 transition-[background-color,box-shadow] duration-200 will-change-transform",
               selected?.name === item.name ? "bg-surface shadow-card ring-2 ring-primary" : "hover:bg-surface/80",
             )}
           >
-            <TechIcon name={item.name} colored className="size-8 drop-shadow-sm" />
+            <TechIcon name={item.name} colored className="size-8 drop-shadow-sm sm:size-9 lg:size-11" />
           </button>
         ))}
       </div>

@@ -14,19 +14,20 @@ export function Stack() {
   return (
     <section id="stack" aria-labelledby="stack-titulo" className="relative overflow-hidden border-y border-border bg-surface/40 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-12">
-          <SectionHeading
-            id="stack-titulo"
-            index="04"
-            eyebrow="Stack tecnológica"
-            title="Ferramentas que uso para tirar ideias do papel."
-            description="Organizadas pelo papel que cumprem em um projeto — da interface ao servidor, passando pelos dados e pela Inteligência Artificial."
-          />
-          {/* Globo interativo */}
-          <Reveal delay={0.1}>
-            <TechGlobe items={globeItems} />
-          </Reveal>
-        </div>
+        <SectionHeading
+          id="stack-titulo"
+          index="04"
+          eyebrow="Stack tecnológica"
+          title="Ferramentas que uso para tirar ideias do papel."
+          description="Organizadas pelo papel que cumprem em um projeto — da interface ao servidor, passando pelos dados e pela Inteligência Artificial."
+          align="center"
+          size="md"
+          className="max-w-2xl"
+        />
+        {/* Globo interativo, grande e centralizado abaixo do título */}
+        <Reveal delay={0.1} className="mt-6 sm:mt-10">
+          <TechGlobe items={globeItems} />
+        </Reveal>
       </div>
 
       {/* Tabela por categoria */}
