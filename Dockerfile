@@ -8,7 +8,7 @@ RUN npm ci --no-audit --no-fund
 
 FROM node:24-slim AS build
 WORKDIR /app
-ARG NEXT_PUBLIC_SITE_URL=https://yvtech.com.br
+ARG NEXT_PUBLIC_SITE_URL=https://portfolio.yvtech.com.br
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules

@@ -73,7 +73,7 @@ O site roda na VPS em Docker (`/opt/portfolio`): contêiner do site + PostgreSQL
 | `deploy/docker-compose.yml` | Site + banco (o banco não fica exposto para a internet) |
 | `deploy/.env.vps.example` | Modelo do `.env` do servidor (segredos ficam só lá) |
 | `deploy/deploy.sh` | Recebe a imagem pronta, troca a versão e confere se subiu |
-| `deploy/nginx-yvtech.com.br.conf` | Endereço no Nginx (o HTTPS é acrescentado pelo certbot) |
+| `deploy/nginx-portfolio.yvtech.com.br.conf` | Endereço no Nginx (o HTTPS é acrescentado pelo certbot) |
 | `deploy/publicar-daqui.sh` | Publica a partir deste computador: monta a imagem aqui e envia pronta |
 | `deploy/ativar-publicacao-automatica.sh` | Rodar uma vez: cria a chave restrita de publicação, cadastra na VPS e guarda nos segredos do GitHub |
 | `deploy/github-actions-publicar.yml.modelo` | Publicação automática a cada push (ativa depois do script acima) |

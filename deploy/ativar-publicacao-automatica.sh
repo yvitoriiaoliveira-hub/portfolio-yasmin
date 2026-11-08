@@ -14,7 +14,7 @@
 # Rodar de novo troca a chave (a antiga deixa de funcionar).
 set -euo pipefail
 
-VPS_HOST="${VPS_HOST:-yvtech.com.br}"
+VPS_HOST="${VPS_HOST:-portfolio.yvtech.com.br}"
 MINHA_CHAVE="${MINHA_CHAVE:-$HOME/.ssh/id_ed25519_yvitoria}"
 REPO="yvitoriiaoliveira-hub/portfolio-yasmin"
 GH="$(command -v gh || echo "$HOME/.local/bin/gh")"
