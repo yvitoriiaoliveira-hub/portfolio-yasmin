@@ -1,0 +1,44 @@
+{
+  "name": "portfolio-yasmin-vitoria",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfólio profissional de Yasmin Vitória — Desenvolvedora Full Stack",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.3",
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.70.0",
+    "motion": "^14.10.1",
+    "next": "16.4.5",
+    "next-themes": "^0.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-hook-form": "^7.91.0",
+    "react-icons": "^5.7.0",
+    "server-only": "^0.0.1",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20.9"
+  }
+}
