@@ -25,6 +25,8 @@ const SCHEMA = `
     lida boolean not null default false
   );
   create index if not exists mensagens_contato_criada_em_idx on mensagens_contato (criada_em desc);
+  alter table mensagens_contato add column if not exists resposta_enviada boolean not null default false;
+  create index if not exists mensagens_contato_email_idx on mensagens_contato (lower(email), criada_em desc);
 `;
 
 export function isDatabaseConfigured() {
@@ -59,10 +61,27 @@ export async function saveContactMessage(data: ContactData) {
   return result.rows[0]?.id ?? null;
 }
 
-/** Marca por onde a mensagem também foi avisada. */
-export async function markDelivered(id: string, channel: "whatsapp" | "email") {
+const deliveryColumns = {
+  whatsapp: "whatsapp_enviado",
+  email: "email_enviado",
+  resposta: "resposta_enviada",
+} as const;
+
+/** Marca por onde a mensagem também foi avisada (ou se a resposta automática saiu). */
+export async function markDelivered(id: string, channel: keyof typeof deliveryColumns) {
   const db = getPool();
   if (!db) return;
-  const column = channel === "whatsapp" ? "whatsapp_enviado" : "email_enviado";
-  await db.query(`update mensagens_contato set ${column} = true where id = $1`, [id]);
+  await db.query(`update mensagens_contato set ${deliveryColumns[channel]} = true where id = $1`, [id]);
+}
+
+/** Quantas respostas automáticas este e-mail já recebeu nas últimas 24 horas (anti-abuso). */
+export async function autoRepliesInLastDay(email: string) {
+  const db = getPool();
+  if (!db) return 0;
+  await ensureSchema(db);
+  const result = await db.query<{ total: string }>(
+    "select count(*) as total from mensagens_contato where lower(email) = lower($1) and resposta_enviada and criada_em > now() - interval '24 hours'",
+    [email],
+  );
+  return Number(result.rows[0]?.total ?? 0);
 }

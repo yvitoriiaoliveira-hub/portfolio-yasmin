@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { contactSchema } from "@/lib/contact-schema";
-import { isDatabaseConfigured, markDelivered, saveContactMessage } from "@/lib/db";
-import { isEmailConfigured, sendContactEmail } from "@/lib/mailer";
+import { autoRepliesInLastDay, isDatabaseConfigured, markDelivered, saveContactMessage } from "@/lib/db";
+import { isEmailConfigured, sendAutoReply, sendOwnerNotification } from "@/lib/mailer";
 import { isRateLimited } from "@/lib/rate-limit";
 import { isWhatsAppConfigured, sendWhatsAppNotification } from "@/lib/whatsapp";
 
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
   const channels = { db: isDatabaseConfigured(), whatsapp: isWhatsAppConfigured(), email: isEmailConfigured() };
   if (!channels.db && !channels.whatsapp && !channels.email) {
-    console.error("[contato] Nenhum canal configurado (DATABASE_URL, Evolution ou Resend).");
+    console.error("[contato] Nenhum canal configurado (DATABASE_URL, Evolution ou SMTP).");
     return NextResponse.json(
       { error: "O envio de mensagens ainda não está disponível. Escreva diretamente para o e-mail ao lado." },
       { status: 503 },
@@ -86,11 +86,24 @@ export async function POST(request: NextRequest) {
   }
   if (channels.email) {
     try {
-      await sendContactEmail(parsed.data);
+      await sendOwnerNotification(parsed.data);
       delivered = true;
       if (id) await markDelivered(id, "email").catch(() => {});
     } catch (error) {
-      console.error("[contato] Falha no envio por e-mail:", error);
+      console.error("[contato] Falha no aviso por e-mail:", error);
+    }
+  }
+
+  // 3. Resposta automática para quem escreveu (no máximo 2 por endereço a cada 24 horas).
+  if (channels.email && (id || delivered)) {
+    try {
+      const recent = await autoRepliesInLastDay(parsed.data.email).catch(() => 0);
+      if (recent < 2) {
+        await sendAutoReply(parsed.data);
+        if (id) await markDelivered(id, "resposta").catch(() => {});
+      }
+    } catch (error) {
+      console.error("[contato] Falha na resposta automática:", error);
     }
   }
 

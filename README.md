@@ -9,7 +9,7 @@ Portfólio profissional de Yasmin Vitória, desenvolvedora Full Stack. Página p
 - **Motion** para animações (respeita "reduzir movimento" do sistema)
 - **next-themes** (tema com persistência) · **Radix UI** (menu do celular e galeria) · **Lucide** e **React Icons** (ícones)
 - **React Hook Form** + **Zod** (formulário, com a mesma validação no navegador e no servidor) · **Sonner** (avisos)
-- Envio de e-mail pelo **Resend** (API HTTP, sem dependência extra)
+- E-mails por **SMTP** com **Nodemailer** (aviso para você + resposta automática para quem escreveu)
 - **Vercel Web Analytics** para estatísticas de acesso (sem cookies e sem dados pessoais). Para ver os números: projeto na Vercel → aba **Analytics** → **Enable**.
 
 ## Rodar no computador
@@ -55,11 +55,11 @@ Copie `.env.example` para `.env.local` (no computador) ou configure no painel da
 | `NEXT_PUBLIC_SITE_URL` | Endereço público (SEO, sitemap, Open Graph, compartilhamento). Precisa existir no momento do build. |
 | `DATABASE_URL` | Banco PostgreSQL onde as mensagens do formulário são guardadas |
 | `EVOLUTION_API_URL`, `EVOLUTION_API_KEY`, `EVOLUTION_INSTANCE`, `CONTACT_WHATSAPP_NUMBER` | Aviso de nova mensagem no WhatsApp (Evolution API v2) |
-| `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Aviso por e-mail (opcional) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | E-mails por SMTP: aviso completo para você e resposta automática para quem escreveu |
 
 ### Formulário de contato
 
-Cada mensagem é **guardada no banco** (tabela `mensagens_contato`, criada automaticamente) e **avisada no WhatsApp** pela Evolution — e por e-mail, se o Resend estiver configurado. Se um aviso falhar, a mensagem continua no banco e nada se perde.
+Cada mensagem é **guardada no banco** (tabela `mensagens_contato`, criada automaticamente), **avisada no WhatsApp** pela Evolution e **por e-mail** (SMTP). Quem escreveu recebe uma **resposta automática** confirmando o recebimento — sem repetir o texto enviado e no máximo 2 por endereço a cada 24 horas, para o formulário não ser usado para mandar e-mail a terceiros. Se um aviso falhar, a mensagem continua no banco e nada se perde.
 
 Sem nenhum canal configurado, o formulário mostra "o envio de mensagens ainda não está disponível" e sugere o e-mail direto, sem quebrar a página.
 Proteções: validação no servidor, campo invisível contra robôs, limite de 5 mensagens a cada 10 minutos por IP e bloqueio de envios de outra origem.
@@ -107,6 +107,6 @@ public/                foto, currículo e telas dos projetos
 ## Checklist antes de publicar
 
 - [ ] Domínio definido e `NEXT_PUBLIC_SITE_URL` configurada
-- [ ] Resend configurado e uma mensagem de teste recebida
+- [ ] SMTP configurado (caixa contato@) e uma mensagem de teste recebida
 - [ ] Links de demonstração/GitHub preenchidos em `projects.ts`, quando existirem
 - [ ] Currículo em PDF atualizado (ele traz o telefone; avalie se quer o telefone público na internet)
