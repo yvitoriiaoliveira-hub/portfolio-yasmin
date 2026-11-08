@@ -13,7 +13,7 @@ export function Projects() {
           id="projetos-titulo"
           index="03"
           eyebrow="Projetos próprios"
-          title="Produtos que eu criei, da ideia à publicação."
+          title="Minhas Criações"
           description="Também fazem parte da minha experiência: cada produto passou por levantamento de requisitos, arquitetura, desenvolvimento e publicação. Veja o problema, as funcionalidades e as tecnologias de cada um."
         />
 
