@@ -30,7 +30,10 @@ export function Education() {
                 </span>
                 <h3 className="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">{education.course}</h3>
                 <p className="mt-2 text-lg text-muted">
-                  {education.institution} <span className="text-subtle">({education.institutionShort})</span>
+                  {education.institution}
+                  {education.institution.includes(education.institutionShort) ? null : (
+                    <span className="text-subtle"> ({education.institutionShort})</span>
+                  )}
                 </p>
                 <p className="mt-6 max-w-xl leading-relaxed text-muted">{education.note}</p>
               </div>

@@ -1,7 +1,7 @@
 export const education = {
   course: "Análise e Desenvolvimento de Sistemas",
-  institution: "Pontifícia Universidade Católica de Minas Gerais",
-  institutionShort: "PUC Minas",
+  institution: "Centro Universitário Una",
+  institutionShort: "Una",
   status: "Em andamento",
   expectedEnd: "Julho de 2027",
   expectedEndDateTime: "2027-07",
