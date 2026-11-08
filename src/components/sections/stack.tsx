@@ -30,41 +30,41 @@ export function Stack() {
         </Reveal>
       </div>
 
-      {/* Tabela por categoria */}
+      {/* Cartões por categoria */}
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="mt-10 sm:mt-14">
-          <ul className="divide-y divide-border overflow-hidden rounded-3xl card-surface">
-            {stackGroups.map((group, index) => (
-              <li
-                key={group.title}
-                className="grid gap-4 px-6 py-6 transition-colors duration-300 hover:bg-surface-2/50 sm:px-8 lg:grid-cols-[17rem_1fr] lg:items-center lg:gap-10"
-              >
-                <div className="flex items-start gap-4">
-                  <span className="pt-0.5 font-mono text-xs text-primary">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3 className="text-base font-semibold tracking-tight">{group.title}</h3>
-                    <p className="mt-0.5 text-sm text-muted">{group.description}</p>
-                  </div>
-                </div>
+        <div className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
+          {stackGroups.map((group, index) => (
+            <Reveal key={group.title}>
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span className="font-mono text-xs text-primary">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="text-lg font-semibold tracking-tight">{group.title}</h3>
+                <p className="w-full text-sm text-muted sm:w-auto">
+                  <span className="hidden sm:inline">— </span>
+                  {group.description}
+                </p>
+              </div>
 
-                <ul className="flex flex-wrap gap-2" aria-label={`Tecnologias de ${group.title}`}>
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="group inline-flex h-9 items-center gap-2 rounded-full border border-border bg-background/60 pr-3.5 pl-2.5 text-sm transition-[border-color,background-color] duration-300 hover:border-border-strong hover:bg-background"
-                    >
-                      <TechIcon
-                        name={item}
-                        className="size-4 shrink-0 text-muted transition-colors duration-300 group-hover:text-(--tech-color)"
-                      />
-                      <span className="whitespace-nowrap">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+              <ul
+                className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8"
+                aria-label={`Tecnologias de ${group.title}`}
+              >
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="group flex aspect-square flex-col items-center justify-center gap-2.5 rounded-2xl border border-border bg-surface p-3 text-center shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-card"
+                  >
+                    <TechIcon
+                      name={item}
+                      colored
+                      className="size-8 transition-transform duration-300 group-hover:scale-110 sm:size-9"
+                    />
+                    <span className="text-xs leading-tight font-medium sm:text-[0.8rem]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
