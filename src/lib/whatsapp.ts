@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { ContactData } from "./contact-schema";
+import { formatPhone, whatsappLink, type ContactData } from "./contact-schema";
 
 /**
  * Aviso de nova mensagem no WhatsApp, pela Evolution API (v2).
@@ -29,9 +29,12 @@ export async function sendWhatsAppNotification(data: ContactData) {
     "",
     `*Nome:* ${data.name}`,
     `*E-mail:* ${data.email}`,
+    `*Telefone:* ${formatPhone(data.phone)}`,
     `*Assunto:* ${data.subject}`,
     "",
     data.message,
+    "",
+    `Chamar no WhatsApp: ${whatsappLink(data.phone)}`,
   ].join("\n");
 
   const response = await fetch(`${settings.url}/message/sendText/${encodeURIComponent(settings.instance)}`, {

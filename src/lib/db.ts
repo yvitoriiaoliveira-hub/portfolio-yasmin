@@ -27,6 +27,7 @@ const SCHEMA = `
   create index if not exists mensagens_contato_criada_em_idx on mensagens_contato (criada_em desc);
   alter table mensagens_contato add column if not exists resposta_enviada boolean not null default false;
   create index if not exists mensagens_contato_email_idx on mensagens_contato (lower(email), criada_em desc);
+  alter table mensagens_contato add column if not exists telefone text;
 `;
 
 export function isDatabaseConfigured() {
@@ -55,8 +56,8 @@ export async function saveContactMessage(data: ContactData) {
   if (!db) return null;
   await ensureSchema(db);
   const result = await db.query<{ id: string }>(
-    "insert into mensagens_contato (nome, email, assunto, mensagem) values ($1, $2, $3, $4) returning id",
-    [data.name, data.email, data.subject, data.message],
+    "insert into mensagens_contato (nome, email, telefone, assunto, mensagem) values ($1, $2, $3, $4, $5) returning id",
+    [data.name, data.email, data.phone, data.subject, data.message],
   );
   return result.rows[0]?.id ?? null;
 }

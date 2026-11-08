@@ -8,7 +8,7 @@ import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { contactSchema, type ContactData, type ContactInput } from "@/lib/contact-schema";
+import { contactSchema, maskPhone, type ContactData, type ContactInput } from "@/lib/contact-schema";
 import { cn } from "@/lib/utils";
 
 const fieldClass =
@@ -43,9 +43,10 @@ export function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactInput, unknown, ContactData>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", subject: "", message: "", website: "" },
+    defaultValues: { name: "", email: "", phone: "", subject: "", message: "", website: "" },
     mode: "onTouched",
   });
+  const phoneField = register("phone");
 
   const message = useWatch({ control, name: "message" });
   const messageLength = message?.length ?? 0;
@@ -90,7 +91,9 @@ export function ContactForm() {
           <CircleCheck className="size-8" />
         </motion.span>
         <h3 className="mt-6 text-2xl font-semibold tracking-tight">Mensagem enviada</h3>
-        <p className="mt-2 max-w-sm text-muted">Obrigada pelo contato! Vou ler com atenção e responder pelo e-mail informado.</p>
+        <p className="mt-2 max-w-sm text-muted">
+          Obrigada pelo contato! Vou ler com atenção e responder pelo e-mail ou pelo telefone informado.
+        </p>
         <Button variant="secondary" className="mt-8" onClick={() => setSent(false)}>
           Enviar outra mensagem
         </Button>
@@ -135,19 +138,42 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="mt-5">
-        <label htmlFor="contato-assunto" className="text-sm font-medium">
-          Assunto
-        </label>
-        <input
-          id="contato-assunto"
-          placeholder="Oportunidade, projeto, parceria…"
-          aria-invalid={errors.subject ? "true" : undefined}
-          aria-describedby={errors.subject ? "contato-assunto-erro" : undefined}
-          className={cn(fieldClass, "mt-2", errors.subject ? "border-danger" : "border-border")}
-          {...register("subject")}
-        />
-        <FieldMessage id="contato-assunto-erro" error={errors.subject} />
+      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="contato-telefone" className="text-sm font-medium">
+            Telefone / WhatsApp
+          </label>
+          <input
+            id="contato-telefone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            placeholder="(31) 99999-9999"
+            aria-invalid={errors.phone ? "true" : undefined}
+            aria-describedby={errors.phone ? "contato-telefone-erro" : undefined}
+            className={cn(fieldClass, "mt-2", errors.phone ? "border-danger" : "border-border")}
+            {...phoneField}
+            onChange={(event) => {
+              event.target.value = maskPhone(event.target.value);
+              return phoneField.onChange(event);
+            }}
+          />
+          <FieldMessage id="contato-telefone-erro" error={errors.phone} />
+        </div>
+        <div>
+          <label htmlFor="contato-assunto" className="text-sm font-medium">
+            Assunto
+          </label>
+          <input
+            id="contato-assunto"
+            placeholder="Oportunidade, projeto, parceria…"
+            aria-invalid={errors.subject ? "true" : undefined}
+            aria-describedby={errors.subject ? "contato-assunto-erro" : undefined}
+            className={cn(fieldClass, "mt-2", errors.subject ? "border-danger" : "border-border")}
+            {...register("subject")}
+          />
+          <FieldMessage id="contato-assunto-erro" error={errors.subject} />
+        </div>
       </div>
 
       <div className="mt-5">

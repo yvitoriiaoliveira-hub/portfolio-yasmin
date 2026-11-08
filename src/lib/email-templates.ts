@@ -2,7 +2,7 @@ import "server-only";
 
 import { siteConfig } from "@/content/site";
 
-import type { ContactData } from "./contact-schema";
+import { formatPhone, whatsappLink, type ContactData } from "./contact-schema";
 
 /** Modelos dos e-mails do formulário de contato (HTML compatível com clientes de e-mail + texto puro). */
 
@@ -70,13 +70,24 @@ export function ownerNotification(data: ContactData, receivedAt: Date) {
      <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.7;margin-bottom:18px">
        <tr><td style="color:${BRAND.muted};padding-right:14px">Nome</td><td><strong>${escapeHtml(data.name)}</strong></td></tr>
        <tr><td style="color:${BRAND.muted};padding-right:14px">E-mail</td><td><a href="mailto:${escapeHtml(data.email)}" style="color:${BRAND.primary}">${escapeHtml(data.email)}</a></td></tr>
+       <tr><td style="color:${BRAND.muted};padding-right:14px">Telefone</td><td><a href="${whatsappLink(data.phone)}" style="color:${BRAND.primary}">${escapeHtml(formatPhone(data.phone))}</a></td></tr>
        <tr><td style="color:${BRAND.muted};padding-right:14px">Recebida em</td><td>${escapeHtml(when)}</td></tr>
      </table>
      <div style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.6;white-space:pre-wrap">${escapeHtml(data.message)}</div>
-     <p style="margin:24px 0 0">${button(replyHref, "Responder")}</p>`,
+     <p style="margin:24px 0 0">${button(replyHref, "Responder por e-mail")}&nbsp; ${button(whatsappLink(data.phone), "Chamar no WhatsApp")}</p>`,
   );
 
-  const text = [`Nova mensagem pelo portfólio`, ``, `Nome: ${data.name}`, `E-mail: ${data.email}`, `Assunto: ${data.subject}`, `Recebida em: ${when}`, ``, data.message].join("\n");
+  const text = [
+    `Nova mensagem pelo portfólio`,
+    ``,
+    `Nome: ${data.name}`,
+    `E-mail: ${data.email}`,
+    `Telefone: ${formatPhone(data.phone)} (WhatsApp: ${whatsappLink(data.phone)})`,
+    `Assunto: ${data.subject}`,
+    `Recebida em: ${when}`,
+    ``,
+    data.message,
+  ].join("\n");
 
   return { subject, html, text };
 }
@@ -91,7 +102,7 @@ export function autoReply(data: ContactData) {
     subject,
     `<h1 style="margin:0 0 16px;font-size:22px;line-height:1.3">${escapeHtml(greeting)}</h1>
      <p style="margin:0 0 14px;font-size:15px;line-height:1.7">Obrigada pelo contato! <strong>Recebemos sua mensagem</strong> e vamos analisar com atenção.</p>
-     <p style="margin:0 0 22px;font-size:15px;line-height:1.7">Em breve você recebe um retorno por este e-mail.</p>
+     <p style="margin:0 0 22px;font-size:15px;line-height:1.7">Em breve você receberá um retorno por este e-mail ou pelo seu número de telefone cadastrado.</p>
      <p style="margin:0 0 26px">${button(`${siteConfig.url}/#projetos`, "Conhecer os projetos")}</p>
      <p style="margin:0;font-size:15px;line-height:1.7">Até logo,<br><strong>${escapeHtml(siteConfig.shortName)}</strong><br><span style="color:${BRAND.muted}">${escapeHtml(siteConfig.role)}</span></p>
      <p style="margin:26px 0 0;font-size:12px;line-height:1.6;color:${BRAND.muted}">Esta é uma resposta automática. Se não foi você que preencheu o formulário em ${siteConfig.url.replace(/^https?:\/\//, "")}, pode ignorar este e-mail.</p>`,
@@ -101,7 +112,7 @@ export function autoReply(data: ContactData) {
     greeting,
     "",
     "Obrigada pelo contato! Recebemos sua mensagem e vamos analisar com atenção.",
-    "Em breve você recebe um retorno por este e-mail.",
+    "Em breve você receberá um retorno por este e-mail ou pelo seu número de telefone cadastrado.",
     "",
     `Conheça os projetos: ${siteConfig.url}/#projetos`,
     "",
