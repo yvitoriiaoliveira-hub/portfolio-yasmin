@@ -1,8 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { contactSchema } from "@/lib/contact-schema";
-import { MailerNotConfiguredError, sendContactEmail } from "@/lib/mailer";
+import { isDatabaseConfigured, markDelivered, saveContactMessage } from "@/lib/db";
+import { isEmailConfigured, sendContactEmail } from "@/lib/mailer";
 import { isRateLimited } from "@/lib/rate-limit";
+import { isWhatsAppConfigured, sendWhatsAppNotification } from "@/lib/whatsapp";
 
 export const runtime = "nodejs";
 
@@ -52,21 +54,52 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  try {
-    await sendContactEmail(parsed.data);
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    if (error instanceof MailerNotConfiguredError) {
-      console.error("[contato] RESEND_API_KEY, CONTACT_FROM_EMAIL ou CONTACT_TO_EMAIL não configurados.");
-      return NextResponse.json(
-        { error: "O envio de mensagens ainda não está disponível. Escreva diretamente para o e-mail ao lado." },
-        { status: 503 },
-      );
-    }
-    console.error("[contato] Falha ao enviar:", error);
+  const channels = { db: isDatabaseConfigured(), whatsapp: isWhatsAppConfigured(), email: isEmailConfigured() };
+  if (!channels.db && !channels.whatsapp && !channels.email) {
+    console.error("[contato] Nenhum canal configurado (DATABASE_URL, Evolution ou Resend).");
     return NextResponse.json(
-      { error: "Não foi possível enviar agora. Tente novamente ou escreva para o e-mail ao lado." },
-      { status: 502 },
+      { error: "O envio de mensagens ainda não está disponível. Escreva diretamente para o e-mail ao lado." },
+      { status: 503 },
     );
   }
+
+  // 1. Guarda a mensagem (assim ela nunca se perde, mesmo se os avisos falharem).
+  let id: string | null = null;
+  if (channels.db) {
+    try {
+      id = await saveContactMessage(parsed.data);
+    } catch (error) {
+      console.error("[contato] Falha ao salvar no banco:", error);
+    }
+  }
+
+  // 2. Avisa no WhatsApp e/ou por e-mail.
+  let delivered = false;
+  if (channels.whatsapp) {
+    try {
+      await sendWhatsAppNotification(parsed.data);
+      delivered = true;
+      if (id) await markDelivered(id, "whatsapp").catch(() => {});
+    } catch (error) {
+      console.error("[contato] Falha no aviso por WhatsApp:", error);
+    }
+  }
+  if (channels.email) {
+    try {
+      await sendContactEmail(parsed.data);
+      delivered = true;
+      if (id) await markDelivered(id, "email").catch(() => {});
+    } catch (error) {
+      console.error("[contato] Falha no envio por e-mail:", error);
+    }
+  }
+
+  if (id || delivered) {
+    return NextResponse.json({ ok: true });
+  }
+
+  return NextResponse.json(
+    { error: "Não foi possível enviar agora. Tente novamente ou escreva para o e-mail ao lado." },
+    { status: 502 },
+  );
 }

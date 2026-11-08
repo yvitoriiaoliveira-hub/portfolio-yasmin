@@ -52,33 +52,38 @@ Copie `.env.example` para `.env.local` (no computador) ou configure no painel da
 
 | Variável | Para quê |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | Endereço público (SEO, sitemap, Open Graph, compartilhamento). Sem ela, o site usa `http://localhost:3000`. |
-| `RESEND_API_KEY` | Chave do Resend para o formulário de contato |
-| `CONTACT_FROM_EMAIL` | Remetente (domínio verificado no Resend) |
-| `CONTACT_TO_EMAIL` | Quem recebe as mensagens |
+| `NEXT_PUBLIC_SITE_URL` | Endereço público (SEO, sitemap, Open Graph, compartilhamento). Precisa existir no momento do build. |
+| `DATABASE_URL` | Banco PostgreSQL onde as mensagens do formulário são guardadas |
+| `EVOLUTION_API_URL`, `EVOLUTION_API_KEY`, `EVOLUTION_INSTANCE`, `CONTACT_WHATSAPP_NUMBER` | Aviso de nova mensagem no WhatsApp (Evolution API v2) |
+| `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Aviso por e-mail (opcional) |
 
 ### Formulário de contato
 
-1. Crie uma conta em [resend.com](https://resend.com) e gere uma chave em **API Keys**.
-2. Em **Domains**, verifique o domínio do site (registros DNS que o Resend mostra).
-3. Configure as três variáveis acima e publique de novo.
+Cada mensagem é **guardada no banco** (tabela `mensagens_contato`, criada automaticamente) e **avisada no WhatsApp** pela Evolution — e por e-mail, se o Resend estiver configurado. Se um aviso falhar, a mensagem continua no banco e nada se perde.
 
-Sem a configuração, o formulário mostra "o envio de mensagens ainda não está disponível" e sugere o e-mail direto, sem quebrar a página.
+Sem nenhum canal configurado, o formulário mostra "o envio de mensagens ainda não está disponível" e sugere o e-mail direto, sem quebrar a página.
 Proteções: validação no servidor, campo invisível contra robôs, limite de 5 mensagens a cada 10 minutos por IP e bloqueio de envios de outra origem.
 
-## Publicar
+## Publicar (VPS)
 
-**Vercel (mais simples):** importe o repositório, configure as variáveis de ambiente e publique.
+O site roda na VPS em Docker (`/opt/portfolio`): contêiner do site + PostgreSQL próprio, com o Nginx na frente e HTTPS do Let's Encrypt. Os arquivos ficam em `deploy/`:
 
-**Servidor próprio (VPS):**
+| Arquivo | Para quê |
+|---|---|
+| `deploy/docker-compose.yml` | Site + banco (o banco não fica exposto para a internet) |
+| `deploy/.env.vps.example` | Modelo do `.env` do servidor (segredos ficam só lá) |
+| `deploy/deploy.sh` | Recebe a imagem pronta, troca a versão e confere se subiu |
+| `deploy/nginx-yvtech.com.br.conf` | Endereço no Nginx (o HTTPS é acrescentado pelo certbot) |
+| `deploy/publicar-daqui.sh` | Publica a partir deste computador: monta a imagem aqui e envia pronta |
+| `deploy/github-actions-publicar.yml.modelo` | Publicação automática a cada push (ainda não ativada) |
+
+Publicar uma versão nova:
 
 ```bash
-npm ci
-npm run build
-NEXT_PUBLIC_SITE_URL=https://seu-dominio.com.br npm start   # porta 3000 por padrão (use -p para trocar)
+bash deploy/publicar-daqui.sh
 ```
 
-Coloque o Nginx na frente com HTTPS. Atenção: `NEXT_PUBLIC_SITE_URL` precisa existir **no momento do build**.
+A VPS não compila nada: só recebe a imagem e troca, em segundos.
 
 ## Estrutura
 

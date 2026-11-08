@@ -16,6 +16,10 @@ export class MailerNotConfiguredError extends Error {
 
 export class MailerSendError extends Error {}
 
+export function isEmailConfigured() {
+  return Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_FROM_EMAIL && process.env.CONTACT_TO_EMAIL);
+}
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")

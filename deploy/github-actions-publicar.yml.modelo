@@ -1,0 +1,39 @@
+name: Publicar na VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Montar a imagem
+        run: docker build --build-arg NEXT_PUBLIC_SITE_URL=https://yvtech.com.br -t portfolio-yasmin:latest .
+
+      - name: Preparar o acesso à VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Enviar e trocar a versão
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: docker save portfolio-yasmin:latest | gzip | ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes "root@${VPS_HOST}"
+
+      - name: Conferir o site
+        run: curl -fsS -o /dev/null -w "yvtech.com.br respondeu %{http_code}\n" https://yvtech.com.br/

@@ -8,6 +8,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Gera um servidor enxuto para rodar em Docker na VPS (pasta .next/standalone).
+  output: "standalone",
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],

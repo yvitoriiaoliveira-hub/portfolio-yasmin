@@ -73,8 +73,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <Footer />
           <BackToTop />
         </Providers>
-        {/* Estatísticas de acesso da Vercel: sem cookies e sem dados pessoais */}
-        <Analytics />
+        {/* Estatísticas de acesso da Vercel (só funcionam quando o site roda na Vercel) */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );
