@@ -1,33 +1,31 @@
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { TechGlobe, type GlobeItem } from "@/components/stack/tech-globe";
 import { TechIcon } from "@/components/stack/tech-icon";
-import { marqueeTools, stackGroups } from "@/content/stack";
+import { stackGroups } from "@/content/stack";
+
+/** Itens do globo: todas as tecnologias, sem repetir ícone igual (ex.: Docker e Docker Compose). */
+const HIDDEN_IN_GLOBE = new Set(["Docker Compose", "React Native"]);
+const globeItems: GlobeItem[] = stackGroups.flatMap((group) =>
+  group.items.filter((item) => !HIDDEN_IN_GLOBE.has(item)).map((item) => ({ name: item, group: group.title })),
+);
 
 export function Stack() {
   return (
     <section id="stack" aria-labelledby="stack-titulo" className="relative overflow-hidden border-y border-border bg-surface/40 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading
-          id="stack-titulo"
-          index="04"
-          eyebrow="Stack tecnológica"
-          title="Ferramentas que uso para tirar ideias do papel."
-          description="Organizadas pelo papel que cumprem em um projeto — da interface ao servidor, passando pelos dados e pela Inteligência Artificial."
-        />
-      </div>
-
-      {/* Faixa de ferramentas */}
-      <div className="group/marquee relative mt-14 mask-fade-x" aria-hidden="true">
-        <div className="flex w-max animate-marquee gap-3 group-hover/marquee:[animation-play-state:paused]">
-          {[...marqueeTools, ...marqueeTools].map((tool, index) => (
-            <span
-              key={`${tool}-${index}`}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm text-muted"
-            >
-              <TechIcon name={tool} className="size-4" colored />
-              {tool}
-            </span>
-          ))}
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-12">
+          <SectionHeading
+            id="stack-titulo"
+            index="04"
+            eyebrow="Stack tecnológica"
+            title="Ferramentas que uso para tirar ideias do papel."
+            description="Organizadas pelo papel que cumprem em um projeto — da interface ao servidor, passando pelos dados e pela Inteligência Artificial."
+          />
+          {/* Globo interativo */}
+          <Reveal delay={0.1}>
+            <TechGlobe items={globeItems} />
+          </Reveal>
         </div>
       </div>
 
