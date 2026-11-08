@@ -7,11 +7,8 @@ import { FitToWidth } from "./fit-to-width";
 import { AutomationsMockup } from "./mockups/automations-mockup";
 import { BotsMockup } from "./mockups/bots-mockup";
 import { CrmMockup } from "./mockups/crm-mockup";
-import { FleetMockup } from "./mockups/fleet-mockup";
-import { LifeMockup } from "./mockups/life-mockup";
 import { BrowserFrame } from "./mockups/mockup-frame";
 import { SitesMockup } from "./mockups/sites-mockup";
-import { StoreMockup } from "./mockups/store-mockup";
 
 type ProjectMockupProps = {
   project: Project;
@@ -34,21 +31,6 @@ export function ProjectMockup({ project, className, showCaption = false, sizes =
       {project.mockup === "crm" && (
         <FitToWidth designWidth={470}>
           <CrmMockup />
-        </FitToWidth>
-      )}
-      {project.mockup === "store" && (
-        <FitToWidth designWidth={470}>
-          <StoreMockup />
-        </FitToWidth>
-      )}
-      {project.mockup === "fleet" && (
-        <FitToWidth designWidth={470}>
-          <FleetMockup />
-        </FitToWidth>
-      )}
-      {project.mockup === "life" && (
-        <FitToWidth designWidth={470}>
-          <LifeMockup />
         </FitToWidth>
       )}
       {project.mockup === "sites" && <SitesMockup />}

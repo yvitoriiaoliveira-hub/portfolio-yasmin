@@ -49,5 +49,5 @@ export const ownProducts = {
   periodDateTime: "2026",
   summary:
     "Criação de produtos completos por iniciativa própria, da ideia à publicação: levantamento de requisitos, modelagem de dados, back-end, interfaces, integrações e implantação.",
-  stack: ["Next.js", "React", "Fastify", "Prisma", "PostgreSQL", "OpenAI API", "Docker", "n8n"],
+  stack: ["Next.js", "React", "Prisma", "PostgreSQL", "OpenAI API", "Docker", "n8n"],
 } as const;

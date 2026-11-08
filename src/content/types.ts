@@ -1,4 +1,4 @@
-export type ProjectMockup = "crm" | "store" | "fleet" | "sites" | "bots" | "automations" | "life";
+export type ProjectMockup = "crm" | "sites" | "bots" | "automations";
 
 export type ProjectImage = {
   src: string;

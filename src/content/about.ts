@@ -3,7 +3,7 @@ export const about = {
   paragraphs: [
     "No meu trabalho, participo da criação e da evolução dos sistemas que a empresa usa no dia a dia — do ponto eletrônico ao CRM que acompanha a produção.",
     "O que mais me motiva é participar do processo inteiro: entender o problema com quem vai usar o sistema, estruturar a solução, desenvolver o back-end, construir as interfaces, integrar os serviços e acompanhar a aplicação até a publicação.",
-    "Fora do trabalho, transformo ideias em projetos próprios, como um CRM para clínicas de estética com atendimento por WhatsApp e um sistema de gestão para lojas. É neles que exploro novas tecnologias, de agentes de IA a automações.",
+    "Fora do trabalho, transformo ideias em projetos próprios, como CRMs com atendimento por WhatsApp e Inteligência Artificial, sites e bots. É neles que exploro novas tecnologias, de agentes de IA a automações.",
   ],
   highlights: [
     { icon: "route", title: "Do problema à produção", text: "Requisitos, regras de negócio, desenvolvimento, testes e publicação." },
