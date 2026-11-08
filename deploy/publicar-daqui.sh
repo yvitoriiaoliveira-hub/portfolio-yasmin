@@ -6,7 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VPS="${VPS:-root@portfolio.yvtech.com.br}"
+VPS="${VPS:-root@195.35.19.139}"
 KEY="${KEY:-$HOME/.ssh/id_ed25519_yvitoria}"
 
 echo "→ Montando a imagem..."
