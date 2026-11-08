@@ -7,7 +7,7 @@ import { projects } from "@/content/projects";
 
 export function Projects() {
   return (
-    <section id="projetos" aria-labelledby="projetos-titulo" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="projetos" aria-labelledby="projetos-titulo" className="relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           id="projetos-titulo"

@@ -6,15 +6,15 @@ import { education } from "@/content/education";
 
 export function Education() {
   return (
-    <section id="formacao" aria-labelledby="formacao-titulo" className="relative py-24 sm:py-32">
+    <section id="formacao" aria-labelledby="formacao-titulo" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading id="formacao-titulo" index="05" eyebrow="Formação" title="Teoria e prática, lado a lado." />
 
-        <Reveal className="mt-14">
-          <article className="relative isolate overflow-hidden rounded-3xl card-surface p-7 sm:p-10">
+        <Reveal className="mt-10 sm:mt-14">
+          <article className="relative isolate overflow-hidden rounded-3xl card-surface p-5 sm:p-10">
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -right-4 -bottom-10 -z-10 font-display text-[9rem] leading-none font-bold tracking-tighter text-transparent [-webkit-text-stroke:1px_var(--border-strong)] sm:text-[13rem]"
+              className="pointer-events-none absolute -right-4 -bottom-10 -z-10 hidden font-display sm:block text-[9rem] leading-none font-bold tracking-tighter text-transparent [-webkit-text-stroke:1px_var(--border-strong)] sm:text-[13rem]"
             >
               2027
             </span>

@@ -2,6 +2,7 @@
 
 import { ArrowDown, ArrowRight, Download } from "lucide-react";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
+import Image from "next/image";
 import type { PointerEvent, ReactNode } from "react";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { SiGithub } from "react-icons/si";
@@ -78,7 +79,7 @@ export function Hero() {
       aria-labelledby="hero-title"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative isolate overflow-hidden pt-28 pb-24 sm:pt-36 lg:min-h-[100svh] lg:pt-40"
+      className="relative isolate overflow-hidden pt-24 pb-16 sm:pt-36 sm:pb-24 lg:min-h-[100svh] lg:pt-40"
     >
       <div aria-hidden="true" className="absolute inset-0 -z-20 bg-grid mask-radial opacity-80" />
       <motion.div aria-hidden="true" className="absolute inset-0 -z-10" style={{ background: glow }} />
@@ -89,9 +90,20 @@ export function Hero() {
 
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-10">
         <div>
-          <FadeUp delay={0.05}>
+          <FadeUp delay={0.05} className="flex items-center gap-4">
+            {/* Foto no celular e no tablet: logo no topo, antes do nome */}
+            <span className="relative block size-[5.5rem] shrink-0 rounded-full bg-gradient-to-br from-primary via-border-strong to-deep p-[2px] lg:hidden">
+              <Image
+                src={siteConfig.photo.src}
+                alt={siteConfig.photo.alt}
+                width={176}
+                height={176}
+                loading="eager"
+                className="size-full rounded-full bg-surface-2 object-cover object-[50%_18%]"
+              />
+            </span>
             <p className="inline-flex items-center gap-2.5 rounded-full border border-border bg-surface/80 py-1.5 pr-4 pl-3 text-xs font-medium text-muted backdrop-blur">
-              <span className="relative inline-flex size-2">
+              <span className="relative inline-flex size-2 shrink-0">
                 {availability.open ? (
                   <span className="absolute inline-flex size-full animate-pulse-ring rounded-full bg-success" />
                 ) : null}
@@ -102,8 +114,8 @@ export function Hero() {
           </FadeUp>
 
           <FadeUp delay={0.12}>
-            <p className="mt-8 font-mono text-xs tracking-[0.2em] text-primary uppercase">
-              {siteConfig.role} <span className="text-subtle">— {siteConfig.location}</span>
+            <p className="mt-7 font-mono text-xs tracking-[0.2em] text-primary uppercase sm:mt-8">
+              {siteConfig.role} <span className="hidden text-subtle sm:inline">— {siteConfig.location}</span>
             </p>
           </FadeUp>
 
@@ -126,7 +138,7 @@ export function Hero() {
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-[1.05rem]">{siteConfig.intro}</p>
           </FadeUp>
 
-          <FadeUp delay={0.85} className="mt-9 flex flex-wrap items-center gap-3">
+          <FadeUp delay={0.85} className="mt-9 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
             <Button asChild size="lg">
               <a href="#projetos">
                 Conhecer projetos
@@ -138,7 +150,7 @@ export function Hero() {
             </Button>
           </FadeUp>
 
-          <FadeUp delay={0.95} className="mt-8 flex flex-wrap items-center gap-2 text-sm">
+          <FadeUp delay={0.95} className="mt-6 -ml-3 flex flex-wrap items-center gap-1 text-sm sm:mt-8 sm:gap-2">
             <Button asChild variant="ghost" size="sm">
               <ExternalLink href={siteConfig.links.github}>
                 <SiGithub />
@@ -154,13 +166,16 @@ export function Hero() {
             <Button asChild variant="ghost" size="sm">
               <a href={siteConfig.resume.href} download={siteConfig.resume.fileName}>
                 <Download />
-                Currículo (PDF)
+                Currículo
               </a>
             </Button>
           </FadeUp>
         </div>
 
-        <HeroVisual pointerX={pointerX} pointerY={pointerY} />
+        {/* Composição com foto e terminal: só no computador (no celular a foto já aparece no topo) */}
+        <div className="hidden lg:block">
+          <HeroVisual pointerX={pointerX} pointerY={pointerY} />
+        </div>
       </div>
 
       <motion.a

@@ -13,7 +13,7 @@ const linkClass =
 
 export function Contact() {
   return (
-    <section id="contato" aria-labelledby="contato-titulo" className="relative isolate overflow-hidden py-24 sm:py-32">
+    <section id="contato" aria-labelledby="contato-titulo" className="relative isolate overflow-hidden py-16 sm:py-24 lg:py-32">
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid mask-radial opacity-60" />
       <div
         aria-hidden="true"

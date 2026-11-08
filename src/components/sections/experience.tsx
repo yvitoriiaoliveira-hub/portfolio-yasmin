@@ -32,7 +32,7 @@ type ExperienceHeaderProps = {
 
 function ExperienceHeader({ icon, title, role, period, periodDateTime, summary, stack }: ExperienceHeaderProps) {
   return (
-    <header className="relative border-b border-border p-7 sm:p-9 lg:border-r lg:border-b-0">
+    <header className="relative border-b border-border p-5 sm:p-9 lg:border-r lg:border-b-0">
       <div aria-hidden="true" className="absolute inset-0 -z-0 bg-grid opacity-60 mask-fade-y" />
       <div className="relative">
         <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-deep to-primary text-white">
@@ -71,7 +71,7 @@ function Label({ children }: { children: string }) {
 
 export function Experience() {
   return (
-    <section id="experiencia" aria-labelledby="experiencia-titulo" className="relative border-y border-border bg-surface/40 py-24 sm:py-32">
+    <section id="experiencia" aria-labelledby="experiencia-titulo" className="relative border-y border-border bg-surface/40 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           id="experiencia-titulo"
@@ -81,7 +81,7 @@ export function Experience() {
           description={experienceIntro}
         />
 
-        <div className="mt-14 space-y-8">
+        <div className="mt-10 space-y-6 sm:mt-14 sm:space-y-8">
           {/* Empresa */}
           <Reveal>
             <article className="overflow-hidden rounded-3xl card-surface">
@@ -96,7 +96,7 @@ export function Experience() {
                   stack={experience.stack}
                 />
 
-                <div className="p-7 sm:p-9">
+                <div className="p-5 sm:p-9">
                   <Label>Sistemas em que atuo</Label>
                   <Stagger className="mt-4 grid gap-3 sm:grid-cols-2">
                     {experience.systems.map((system) => {
@@ -143,7 +143,7 @@ export function Experience() {
                   stack={ownProducts.stack}
                 />
 
-                <div className="p-7 sm:p-9">
+                <div className="p-5 sm:p-9">
                   <Label>Produtos que criei</Label>
                   <Stagger className="mt-4 grid gap-3 sm:grid-cols-2">
                     {projects.map((project) => (
@@ -157,7 +157,7 @@ export function Experience() {
                             <ArrowUpRight className="size-4 shrink-0 text-subtle transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
                           </span>
                           <span className="mt-1 font-mono text-[0.7rem] tracking-wide text-primary uppercase">{project.category}</span>
-                          <span className="mt-2 text-sm leading-relaxed text-muted">{project.summary}</span>
+                          <span className="mt-2 hidden text-sm leading-relaxed text-muted sm:block">{project.summary}</span>
                         </Link>
                       </StaggerItem>
                     ))}

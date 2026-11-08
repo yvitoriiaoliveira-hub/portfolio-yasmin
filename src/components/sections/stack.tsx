@@ -5,7 +5,7 @@ import { marqueeTools, stackGroups } from "@/content/stack";
 
 export function Stack() {
   return (
-    <section id="stack" aria-labelledby="stack-titulo" className="relative overflow-hidden border-y border-border bg-surface/40 py-24 sm:py-32">
+    <section id="stack" aria-labelledby="stack-titulo" className="relative overflow-hidden border-y border-border bg-surface/40 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           id="stack-titulo"
@@ -33,7 +33,7 @@ export function Stack() {
 
       {/* Tabela por categoria */}
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="mt-14">
+        <Reveal className="mt-10 sm:mt-14">
           <ul className="divide-y divide-border overflow-hidden rounded-3xl card-surface">
             {stackGroups.map((group, index) => (
               <li
