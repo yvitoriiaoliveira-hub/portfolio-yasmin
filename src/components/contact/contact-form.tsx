@@ -65,6 +65,7 @@ export function ContactForm() {
       }
 
       toast.success("Mensagem enviada! Vou responder assim que possível.");
+      (window as Window & { umami?: { track: (event: string) => void } }).umami?.track("mensagem-enviada");
       reset();
       setSent(true);
     } catch {

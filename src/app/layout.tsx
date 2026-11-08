@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Sora } from "next/font/google";
+import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { BackToTop } from "@/components/layout/back-to-top";
@@ -75,6 +76,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </Providers>
         {/* Estatísticas de acesso da Vercel (só funcionam quando o site roda na Vercel) */}
         {process.env.VERCEL ? <Analytics /> : null}
+        {/* Estatísticas de visitas (Umami): sem cookies; só conta no domínio oficial */}
+        <Script
+          src={siteConfig.analytics.scriptUrl}
+          data-website-id={siteConfig.analytics.websiteId}
+          data-domains={siteConfig.analytics.domain}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

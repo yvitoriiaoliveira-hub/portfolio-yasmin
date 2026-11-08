@@ -45,7 +45,7 @@ export function About() {
                 </li>
               </ul>
               <Button asChild variant="secondary" className="mt-6 w-full">
-                <a href={siteConfig.resume.href} download={siteConfig.resume.fileName}>
+                <a href={siteConfig.resume.href} download={siteConfig.resume.fileName} data-umami-event="baixar-curriculo">
                   <Download />
                   Baixar currículo
                 </a>

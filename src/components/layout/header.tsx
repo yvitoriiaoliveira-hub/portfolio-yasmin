@@ -73,7 +73,7 @@ export function Header() {
         <div className="flex items-center gap-1.5">
           <ThemeToggle />
           <Button asChild variant="secondary" size="sm" className="hidden sm:inline-flex">
-            <a href={siteConfig.resume.href} download={siteConfig.resume.fileName}>
+            <a href={siteConfig.resume.href} download={siteConfig.resume.fileName} data-umami-event="baixar-curriculo">
               <Download />
               Currículo
             </a>

@@ -70,7 +70,7 @@ export function MobileMenu({ active, pathname }: MobileMenuProps) {
 
           <div className="mt-auto space-y-4">
             <Button asChild className="w-full" size="lg">
-              <a href={siteConfig.resume.href} download={siteConfig.resume.fileName}>
+              <a href={siteConfig.resume.href} download={siteConfig.resume.fileName} data-umami-event="baixar-curriculo">
                 <Download />
                 Baixar currículo
               </a>

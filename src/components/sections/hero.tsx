@@ -152,19 +152,19 @@ export function Hero() {
 
           <FadeUp delay={0.95} className="mt-6 -ml-3 flex flex-wrap items-center gap-1 text-sm sm:mt-8 sm:gap-2">
             <Button asChild variant="ghost" size="sm">
-              <ExternalLink href={siteConfig.links.github}>
+              <ExternalLink data-umami-event="abrir-github" href={siteConfig.links.github}>
                 <SiGithub />
                 GitHub
               </ExternalLink>
             </Button>
             <Button asChild variant="ghost" size="sm">
-              <ExternalLink href={siteConfig.links.linkedin}>
+              <ExternalLink data-umami-event="abrir-linkedin" href={siteConfig.links.linkedin}>
                 <FaLinkedinIn />
                 LinkedIn
               </ExternalLink>
             </Button>
             <Button asChild variant="ghost" size="sm">
-              <a href={siteConfig.resume.href} download={siteConfig.resume.fileName}>
+              <a href={siteConfig.resume.href} download={siteConfig.resume.fileName} data-umami-event="baixar-curriculo">
                 <Download />
                 Currículo
               </a>

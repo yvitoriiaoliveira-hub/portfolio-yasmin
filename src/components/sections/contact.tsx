@@ -47,7 +47,7 @@ export function Contact() {
               <CopyEmail email={siteConfig.email} />
             </li>
             <li>
-              <ExternalLink href={siteConfig.links.linkedin} className={linkClass}>
+              <ExternalLink data-umami-event="abrir-linkedin" href={siteConfig.links.linkedin} className={linkClass}>
                 <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#0a66c2]/10 text-[#0a66c2] dark:text-[#5aa9ff]">
                   <FaLinkedinIn className="size-5" aria-hidden="true" />
                 </span>
@@ -59,7 +59,7 @@ export function Contact() {
               </ExternalLink>
             </li>
             <li>
-              <ExternalLink href={siteConfig.links.github} className={linkClass}>
+              <ExternalLink data-umami-event="abrir-github" href={siteConfig.links.github} className={linkClass}>
                 <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-foreground/8 text-foreground">
                   <SiGithub className="size-5" aria-hidden="true" />
                 </span>

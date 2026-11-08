@@ -52,6 +52,13 @@ export const siteConfig = {
     fileName: "Curriculo-Yasmin-Vitoria.pdf",
   },
 
+  /** Estatísticas de visitas (Umami, na própria VPS). */
+  analytics: {
+    scriptUrl: "https://analytics.yvtech.com.br/script.js",
+    websiteId: "d0eb9967-ca96-4337-b88e-7b3a7ee8233e",
+    domain: "portfolio.yvtech.com.br",
+  },
+
   photo: {
     src: "/images/yasmin.jpg",
     alt: "Yasmin Vitória, desenvolvedora Full Stack, sorrindo, com fundo claro",
