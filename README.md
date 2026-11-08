@@ -10,6 +10,7 @@ Portfólio profissional de Yasmin Vitória, desenvolvedora Full Stack. Página p
 - **next-themes** (tema com persistência) · **Radix UI** (menu do celular e galeria) · **Lucide** e **React Icons** (ícones)
 - **React Hook Form** + **Zod** (formulário, com a mesma validação no navegador e no servidor) · **Sonner** (avisos)
 - Envio de e-mail pelo **Resend** (API HTTP, sem dependência extra)
+- **Vercel Web Analytics** para estatísticas de acesso (sem cookies e sem dados pessoais). Para ver os números: projeto na Vercel → aba **Analytics** → **Enable**.
 
 ## Rodar no computador
 

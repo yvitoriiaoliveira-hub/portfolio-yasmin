@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Sora } from "next/font/google";
 import type { ReactNode } from "react";
@@ -72,6 +73,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <Footer />
           <BackToTop />
         </Providers>
+        {/* Estatísticas de acesso da Vercel: sem cookies e sem dados pessoais */}
+        <Analytics />
       </body>
     </html>
   );
